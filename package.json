@@ -1,12 +1,12 @@
 {
-  "name": "customer-management",
+  "name": "nodejs-customer-management",
   "version": "1.0.0",
   "description": "Customer Management",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },
-  "author": "",
+  "author": "lazarm520",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
