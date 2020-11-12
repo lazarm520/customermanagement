@@ -25,4 +25,7 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
+
+  // Retrieve all Project
+  app.get("/api/user", controller.findAll);
 };
