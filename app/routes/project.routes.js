@@ -7,7 +7,7 @@ module.exports = app => {
   router.post("/", controller.create);
 
   // Retrieve all Project
-  router.get("/", controller.getAll);
+  router.get("/", controller.findAll);
 
   // Retrieve a single Project with id
   router.get("/:id", controller.findOne);
@@ -20,6 +20,9 @@ module.exports = app => {
 
   // Create a new Project
   router.delete("/", controller.deleteAll);
+
+  // Retrieve a all Project by User (Creator)
+  router.get("/user/:userId", controller.findAllByUserId);
 
   app.use("/api/projects", router);
 };
