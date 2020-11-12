@@ -23,6 +23,10 @@ db.user = require("./user.model");
 db.role = require("./role.model");
 db.project = require("./project.model");
 db.collection = require("./collection.model");
+db.product_details = require("./product_details.model");
+db.product = require("./product.model");
+db.customer = require("./customer.model");
+db.customer_details = require("./customer_details.model");
 Role = require("./role.model");
 
 /*
