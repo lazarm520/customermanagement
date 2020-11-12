@@ -10,6 +10,12 @@ const Project = mongoose.model(
 			description: {
 				type: String,
 			},
+			_creator: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "User"
+				}
+			],
 		},
 		{ timestamps: true }
 	)

@@ -24,63 +24,63 @@ db.role = require("./role.model");
 db.project = require("./project.model");
 Role = require("./role.model");
 
-
-db.role.belongsToMany(db.user, {
-  through: "user_roles",
-  foreignKey: "roleId",
-  otherKey: "userId",
-});
-db.user.belongsToMany(db.role, {
-  through: "user_roles",
-  foreignKey: "userId",
-  otherKey: "roleId",
-});
-db.project.belongsTo(db.user, {
-  as: "creator",
-  foreignKey: "userId"
-});
-db.user.hasMany(db.project, { 
-  foreignKey: "userId", 
-  onDelete:"CASCADE" 
-});
+/*
+db.user_roles = mongoose.model(
+	"user_roles",
+	new mongoose.Schema({
+		userId: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User"
+			}
+		],
+		roleId: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Role"
+			}
+		],
+	})
+);
+*/
 
 db.ROLES = ["user", "admin", "moderator"];
 
 // Roles init
 function initial() {
-  Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      new Role({
-        name: "user"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
+	Role.estimatedDocumentCount((err, count) => {
+		if (!err && count === 0) {
+			new Role({
+				name: "user"
+			}).save(err => {
+				if (err) {
+					console.log("error", err);
+				}
 
-        console.log("added 'user' to roles collection");
-      });
+				console.log("added 'user' to roles collection");
+			});
 
-      new Role({
-        name: "moderator"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
+			new Role({
+				name: "moderator"
+			}).save(err => {
+				if (err) {
+					console.log("error", err);
+				}
 
-        console.log("added 'moderator' to roles collection");
-      });
+				console.log("added 'moderator' to roles collection");
+			});
 
-      new Role({
-        name: "admin"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
+			new Role({
+				name: "admin"
+			}).save(err => {
+				if (err) {
+					console.log("error", err);
+				}
 
-        console.log("added 'admin' to roles collection");
-      });
-    }
-  });
+				console.log("added 'admin' to roles collection");
+			});
+		}
+	});
 }
 
 module.exports = db;

@@ -1,37 +1,51 @@
 const db = require("../models");
 const Project = db.project;
+const User = db.user;
 
 // Create and Save a new Project
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.title) {
+	if (!req.body.title || !req.body.userId ) {
 		res.status(400).send({ message: "Content can not be empty!" });
 		return;
 	}
 
-	// Create a Project
-	const project = new Project({
-		title: req.body.title,
-		description: req.body.description,
-		userId: req.body.userId
-	});
+	User.findById(req.body.userId)
+		.then(user => {
+			if (!user)
+				res.status(404).send({ message: "Not found User with id " + id });
+			else {
+				// Create a Project
+				const project = new Project({
+					title: req.body.title,
+					description: req.body.description,
+					_creator: user
+				});
 
-	// Save Project in the database
-	project
-		.save(project)
-		.then(data => {
-			res.send({
-				message: "Project successfully created",
-				data,
-				error: false
-			});
+				// Save Project in the database
+				project
+					.save(project)
+					.then(data => {
+						res.send({
+							message: "Project successfully created",
+							data,
+							error: false
+						});
+					})
+					.catch(err => {
+						res.status(500).send({
+							message: err.message || "Some error occurred while creating the Project.",
+							error: true
+						});
+					});
+			}
 		})
 		.catch(err => {
-			res.status(500).send({
-				message: err.message || "Some error occurred while creating the Project.",
-				error: true
-			});
+			res
+				.status(500)
+				.send({ message: "Error retrieving User with id=" + id });
 		});
+
 };
 
 
@@ -79,20 +93,37 @@ exports.update = (req, res) => {
 		});
 	}
 
-	const id = req.params.id;
+	User.findById(req.body._creator[0].id)
+		.then(user => {
+			if (!user)
+				res.status(404).send({ message: "Not found User with id " + id });
+			else {
+				const id = req.params.id;
+				const project = {
+					title: req.body.title,
+					description: req.body.description
+				}
+				console.log({...req.body, user});
 
-	Project.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-		.then(data => {
-			if (!data) {
-				res.status(404).send({
-					message: `Cannot update Project with id=${id}. Maybe Project was not found!`
-				});
-			} else res.send({ message: "Project was updated successfully." });
-		})
+				Project.findByIdAndUpdate(id, project, { useFindAndModify: false })
+					.then(data => {
+						console.log(data);
+						if (!data) {
+							res.status(404).send({
+								message: `Cannot update Project with id=${id}. Maybe Project was not found!`
+							});
+						} else res.send({ message: "Project was updated successfully." });
+					})
+					.catch(err => {
+						res.status(500).send({
+							message: "Error updating Project with id=" + id
+						});
+					});
+		}})
 		.catch(err => {
-			res.status(500).send({
-				message: "Error updating Project with id=" + id
-			});
+			res
+				.status(500)
+				.send({ message: "Error retrieving User with id=" + id });
 		});
 };
 
