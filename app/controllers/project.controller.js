@@ -93,7 +93,7 @@ exports.update = (req, res) => {
 		});
 	}
 
-	User.findById(req.body._creator[0].id)
+	User.findById(req.body._creator[0])
 		.then(user => {
 			if (!user)
 				res.status(404).send({ message: "Not found User with id " + id });
@@ -101,7 +101,8 @@ exports.update = (req, res) => {
 				const id = req.params.id;
 				const project = {
 					title: req.body.title,
-					description: req.body.description
+					description: req.body.description,
+					_creator: user
 				}
 				console.log({...req.body, user});
 
