@@ -27,6 +27,8 @@ db.product_details = require("./product_details.model");
 db.product = require("./product.model");
 db.customer = require("./customer.model");
 db.customer_details = require("./customer_details.model");
+db.order = require("./order.model");
+db.order_details = require("./order_details.model");
 Role = require("./role.model");
 
 /*
