@@ -52,7 +52,7 @@ db.user_roles = mongoose.model(
 db.ROLES = ["user", "admin", "moderator"];
 
 // Roles init
-function initial() {
+initial = () => {
 	Role.estimatedDocumentCount((err, count) => {
 		if (!err && count === 0) {
 			new Role({
