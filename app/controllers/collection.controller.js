@@ -25,7 +25,7 @@ exports.create = (req, res) => {
 				collection
 					.save(collection)
 					.then(data => {
-						res.send({
+						res.status(201).send({
 							message: "Collection successfully created",
 							data,
 							error: false
@@ -53,7 +53,7 @@ exports.findAll = (req, res) => {
 
 	Collection.find({})
 		.then(data => {
-			res.send({
+			res.status(200).send({
 				data,
 				error: false
 			});
@@ -75,7 +75,7 @@ exports.findOne = (req, res) => {
 		.then(data => {
 			if (!data)
 				res.status(404).send({ message: "Not found Collection with id " + id });
-			else res.send(data);
+			else res.status(200).send(data);
 		})
 		.catch(err => {
 			res
@@ -111,7 +111,7 @@ exports.update = (req, res) => {
 							res.status(404).send({
 								message: `Cannot update Collection with id=${id}. Maybe Collection was not found!`
 							});
-						} else res.send({ message: "Collection was updated successfully." });
+						} else res.status(200).send({ message: "Collection was updated successfully." });
 					})
 					.catch(err => {
 						res.status(500).send({
@@ -137,7 +137,7 @@ exports.delete = (req, res) => {
 					message: `Cannot delete Collection with id=${id}. Maybe Collection was not found!`
 				});
 			} else {
-				res.send({
+				res.status(204).send({
 					message: "Collection was deleted successfully!"
 				});
 			}
@@ -153,7 +153,7 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
 	Collection.deleteMany({})
 		.then(data => {
-			res.send({
+			res.status(204).send({
 				message: `${data.deletedCount} Collections were deleted successfully!`
 			});
 		})
@@ -176,7 +176,7 @@ exports.findAllByProjectId = (req, res) => {
 	const projectId = req.params.projectId;
 	Collection.find({ projectId })
 		.then(data => {
-			res.send({
+			res.status(200).send({
 				data,
 				error: false
 			});

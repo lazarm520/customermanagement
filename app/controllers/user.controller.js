@@ -22,7 +22,7 @@ exports.findAll = (req, res) => {
 
 	User.find({})
 		.then(data => {
-			res.send({
+			res.status(200).send({
 				data,
 				error: false
 			});

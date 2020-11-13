@@ -26,7 +26,7 @@ exports.create = (req, res) => {
 				project
 					.save(project)
 					.then(data => {
-						res.send({
+						res.status(201).send({
 							message: "Project successfully created",
 							data,
 							error: false
@@ -54,7 +54,7 @@ exports.findAll = (req, res) => {
 
 	Project.find({})
 		.then(data => {
-			res.send({
+			res.status(200).send({
 				data,
 				error: false
 			});
@@ -76,7 +76,7 @@ exports.findOne = (req, res) => {
 		.then(data => {
 			if (!data)
 				res.status(404).send({ message: "Not found Project with id " + id });
-			else res.send(data);
+			else res.status(200).send(data);
 		})
 		.catch(err => {
 			res
@@ -113,7 +113,7 @@ exports.update = (req, res) => {
 							res.status(404).send({
 								message: `Cannot update Project with id=${id}. Maybe Project was not found!`
 							});
-						} else res.send({ message: "Project was updated successfully." });
+						} else res.status(200).send({ message: "Project was updated successfully." });
 					})
 					.catch(err => {
 						res.status(500).send({
@@ -139,7 +139,7 @@ exports.delete = (req, res) => {
 					message: `Cannot delete Project with id=${id}. Maybe Project was not found!`
 				});
 			} else {
-				res.send({
+				res.status(204).send({
 					message: "Project was deleted successfully!"
 				});
 			}
@@ -155,7 +155,7 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
 	Project.deleteMany({})
 		.then(data => {
-			res.send({
+			res.status(204).send({
 				message: `${data.deletedCount} Projects were deleted successfully!`
 			});
 		})

@@ -54,7 +54,7 @@ exports.create = (req, res) => {
 			customer_details
 				.save(customer_details)
 				.then(customer_details => {
-					res.send({
+					res.status(201).send({
 						message: "Customer and Customer_Details successfully created",
 						data: [customer, customer_details],
 						error: false
@@ -82,7 +82,7 @@ exports.findAll = (req, res) => {
 
 	Customer.find({ include: [{ model: db.customer_details }]})
 		.then(data => {
-			res.send({
+			res.status(200).send({
 				data,
 				error: false
 			});
@@ -104,7 +104,7 @@ exports.findOne = (req, res) => {
 		.then(data => {
 			if (!data)
 				res.status(404).send({ message: "Not found Customer with id " + id });
-			else res.send(data);
+			else res.status(200).send(data);
 		})
 		.catch(err => {
 			res
@@ -142,7 +142,7 @@ exports.update = (req, res) => {
 								message: `Customer was updated successfully but Customer_Details cannot with id=${idD}. 
 								Maybe Customer_Details was not found!`
 							});
-						} else { res.send({ message: "Customer and Customer_Details was updated successfully." })}
+						} else { res.status(200).send({ message: "Customer and Customer_Details was updated successfully." })}
 					})
 					.catch(err => {
 						res.status(500).send({
@@ -184,7 +184,7 @@ exports.delete = (req, res) => {
 											message: `Cannot delete Customer with id=${id}. Maybe Customer was not found!`
 										});
 									} else {
-										res.send({
+										res.status(204).send({
 											message: "Customer and Customer_Details was deleted successfully!"
 										});
 									}
@@ -218,7 +218,7 @@ exports.deleteAll = (req, res) => {
 
 			Customer.deleteMany({})
 				.then(data => {
-					res.send({
+					res.status(204).send({
 						message: `${customer.deletedCount} Customers and ${customer_details.deletedCount} Customer_Details were deleted successfully!`
 					});
 				})
