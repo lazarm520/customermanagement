@@ -28,7 +28,8 @@ const Customer_Details = mongoose.model(
 			customerId: [
 				{
 					type: mongoose.Schema.Types.ObjectId,
-					ref: "Customer"
+					ref: "Customer",
+					required: true
 				}
 			]
 		},

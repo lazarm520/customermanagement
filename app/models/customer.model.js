@@ -6,9 +6,11 @@ const Customer = mongoose.model(
 		{
 			firstname: {
 				type: String,
+				required: true
 			},
 			lastname: {
 				type: String,
+				required: true
 			},
 			phone: {
 				type: String,
@@ -16,12 +18,6 @@ const Customer = mongoose.model(
 			email: {
 				type: String,
 			},
-			detailsId: [
-				{
-					type: mongoose.Schema.Types.ObjectId,
-					ref: "Customer_Details"
-				}
-			]
 		},
 		{ timestamps: true }
 	)
