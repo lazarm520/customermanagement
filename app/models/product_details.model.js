@@ -19,7 +19,8 @@ const Product_Details = mongoose.model(
 			productId: [
 				{
 					type: mongoose.Schema.Types.ObjectId,
-					ref: "Product"
+					ref: "Product",
+					required: true
 				}
 			],
 		},

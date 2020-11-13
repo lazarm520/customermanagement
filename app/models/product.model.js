@@ -4,22 +4,17 @@ const Product = mongoose.model(
 	"Product",
 	new mongoose.Schema(
 		{
-			ref: {
+			refs: {
 				type: String,
 			},
 			name: {
 				type: String,
 			},
-			detailsId: [
-				{
-					type: mongoose.Schema.Types.ObjectId,
-					ref: "Product_Details"
-				}
-			],
 			collectionId: [
 				{
 					type: mongoose.Schema.Types.ObjectId,
-					ref: "Collection"
+					ref: "Collection",
+					required: true
 				}
 			],
 		},
